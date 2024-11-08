@@ -1,0 +1,22 @@
+version: '3'
+
+env:
+  TAG: v0.0.1
+
+tasks:
+  build:
+    desc: build the CLI locally
+    cmds:
+      - go build .
+  test:
+    desc: test out the CLI
+    deps:
+      - build
+    cmds:
+      - ./test.sh
+  release:
+    desc: release the binary
+    cmds:
+      - git tag -a $TAG -m "Version $TAG"
+      - git push origin --tags
+      - goreleaser release
