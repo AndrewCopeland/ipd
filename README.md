@@ -8,7 +8,7 @@ get your free api key at https://ipdetective.io
 
 ```
 Example usage:
-	ipd                 # get my ip info
+	ipd                     # get my ip info
 	ipd 8.8.8.8 		# get ip info about 8.8.8.8
 
 	ipd -csv 8.8.8.8  	# get ip info in csv format
