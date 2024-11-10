@@ -19,4 +19,5 @@ tasks:
     cmds:
       - git tag -a $TAG -m "Version $TAG"
       - git push origin --tags
+      - rm -rf dist
       - goreleaser release
