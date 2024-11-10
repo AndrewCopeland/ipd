@@ -1,7 +1,7 @@
 version: '3'
 
 env:
-  TAG: v0.0.2
+  TAG: v0.0.3
 
 tasks:
   build:
@@ -17,7 +17,12 @@ tasks:
   release:
     desc: release the binary
     cmds:
-      - git tag -a $TAG -m "Version $TAG"
+      - sed -i.bak "s/$(git describe --tags --abbrev=0)/${TAG}/g" main.go
+      - sed -i.bak "s/$(git describe --tags --abbrev=0)/${TAG}/g" install.sh
+      - rm *.bak
+      - git add -A
+      - git commit -m "Bump to ${TAG}"
+      - git tag -a "$TAG" -m "Version $TAG"
       - git push origin --tags
       - rm -rf dist
       - goreleaser release
