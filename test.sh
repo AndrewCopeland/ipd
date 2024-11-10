@@ -4,7 +4,7 @@ set -e
 TEST_GOOGLE_SUCCESS=$(cat <<-END
 IP:		8.8.8.8
 Bot:		true
-Type:		datacenter
+Type:		bot
 ASN:		15169
 ASN Desc:	GOOGLE
 Country Code:	US
@@ -14,7 +14,7 @@ END
 
 
 TEST_GOOGLE_CSV_SUCCESS=$(cat <<-END
-"8.8.8.8","true","datacenter","15169","GOOGLE","US","United States"
+"8.8.8.8","true","bot","15169","GOOGLE","US","United States"
 END
 )
 
@@ -26,13 +26,13 @@ TEST_GOOGLE_JSON_SUCCESS=$(cat <<-END
   "country_code": "US",
   "country_name": "United States",
   "ip": "8.8.8.8",
-  "type": "datacenter"
+  "type": "bot"
 }
 END
 )
 
 TEST_CSV_PIPE_SUCCESS=$(cat <<-END
-"8.8.8.8","true","datacenter","15169","GOOGLE","US","United States"
+"8.8.8.8","true","bot","15169","GOOGLE","US","United States"
 "1.1.1.1","true","datacenter","13335","CLOUDFLARENET","AU","Australia"
 END
 )
