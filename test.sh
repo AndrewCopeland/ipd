@@ -14,7 +14,7 @@ END
 
 
 TEST_GOOGLE_CSV_SUCCESS=$(cat <<-END
-"8.8.8.8","true","datacenter","15169","GOOGLE","US","United States"
+8.8.8.8,true,datacenter,15169,GOOGLE,US,United States
 END
 )
 
@@ -32,8 +32,8 @@ END
 )
 
 TEST_CSV_PIPE_SUCCESS=$(cat <<-END
-"8.8.8.8","true","datacenter","15169","GOOGLE","US","United States"
-"1.1.1.1","true","datacenter","13335","CLOUDFLARENET","AU","Australia"
+8.8.8.8,true,datacenter,15169,GOOGLE,US,United States
+1.1.1.1,true,datacenter,13335,CLOUDFLARENET,AU,Australia
 END
 )
 

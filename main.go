@@ -2,7 +2,9 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"context"
+	"encoding/csv"
 	"encoding/json"
 	"flag"
 	"fmt"
@@ -20,18 +22,18 @@ var (
 	helpFlag        = flag.Bool("help", false, "shows this help menu")
 	helpDescription = `ipd - a ip bot detection and ip geolocation command line utility
 
-set api key by using the environment variable 'IPDETECTIVE_API_KEY'
+Set api key by using the environment variable 'IPDETECTIVE_API_KEY'
 
-get your FREE api key at https://ipdetective.io
+Get your FREE api key at https://ipdetective.io
 
 Example usage:
-  ipd 			# get my ip info	
-  ipd 8.8.8.8 		# get ip info about 8.8.8.8
-  ipd -csv 8.8.8.8  	# get ip info in csv format
-  ipd -json 8.8.8.8  	# get ip info in json format
+ipd                 # get my ip info	
+ipd 8.8.8.8         # get ip info about 8.8.8.8
+ipd -csv 8.8.8.8    # get ip info in csv format
+ipd -json 8.8.8.8   # get ip info in json format
 
-  # create CSV file of all unique vistors from nginx logs
-  cat /var/log/nginx/access.log | awk '{print $1}' | sort | uniq | ipd -csv > unique_vistors.csv
+# create CSV file of all unique vistors from nginx logs
+cat /var/log/nginx/access.log | awk '{print $1}' | sort | uniq | ipd -csv > unique_vistors.csv
 `
 )
 
@@ -110,9 +112,28 @@ func processIP(ctx context.Context, client *ipdetective.DefaultAPIService, ip st
 
 func printIPResponse(resp *ipdetective.IPResponse) {
 	if csvFlag != nil && *csvFlag {
-		fmt.Printf("\"%s\",\"%t\",\"%s\",\"%d\",\"%s\",\"%s\",\"%s\"\n",
-			resp.Ip, resp.Bot, fromPtr(resp.Type), fromPtr(resp.Asn), fromPtr(resp.AsnDescription),
-			fromPtr(resp.CountryCode), fromPtr(resp.CountryName))
+		line := []string{
+			resp.Ip,
+			fmt.Sprintf("%t", resp.Bot),
+			fromPtr(resp.Type),
+			fmt.Sprintf("%d", fromPtr(resp.Asn)),
+			fromPtr(resp.AsnDescription),
+			fromPtr(resp.CountryCode),
+			fromPtr(resp.CountryName),
+		}
+
+		var buf bytes.Buffer
+		writer := csv.NewWriter(&buf)
+
+		if err := writer.Write(line); err != nil {
+			log.Fatalf("could not to write record to CSV: %s", err)
+		}
+		writer.Flush()
+
+		if err := writer.Error(); err != nil {
+			log.Fatalf("CSV write error: %s", err)
+		}
+		fmt.Print(buf.String())
 		return
 	}
 	if jsonFlag != nil && *jsonFlag {
