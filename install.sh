@@ -4,7 +4,7 @@ os=$(uname)
 architecture=$(uname -m)
 
 fileName="ipd_${os}_${architecture}.tar.gz"
-url="https://github.com/AndrewCopeland/ipd/releases/download/v0.0.3/$fileName"
+url="https://github.com/AndrewCopeland/ipd/releases/download/v0.0.4/$fileName"
 
 echo "downloading ipd from $url"
 curl -s -OL "$url"

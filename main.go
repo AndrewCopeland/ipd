@@ -15,7 +15,7 @@ import (
 )
 
 var (
-	version         = "v0.0.3"
+	version         = "v0.0.4"
 	versionFlag     = flag.Bool("version", false, "returns the version of ipd")
 	jsonFlag        = flag.Bool("json", false, "returns ip information in json format")
 	csvFlag         = flag.Bool("csv", false, "returns ip information in csv format")
