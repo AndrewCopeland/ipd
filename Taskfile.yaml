@@ -22,6 +22,7 @@ tasks:
       - rm *.bak
       - git add -A
       - git commit -m "Bump to ${TAG}"
+      - git push
       - git tag -a "$TAG" -m "Version $TAG"
       - git push origin --tags
       - rm -rf dist
