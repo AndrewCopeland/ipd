@@ -1,7 +1,7 @@
 version: '3'
 
 env:
-  TAG: v0.0.3
+  TAG: v0.0.4
 
 tasks:
   build:
