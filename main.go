@@ -13,6 +13,8 @@ import (
 )
 
 var (
+	version         = "v0.0.2"
+	versionFlag     = flag.Bool("version", false, "returns the version of ipd")
 	jsonFlag        = flag.Bool("json", false, "returns ip information in json format")
 	csvFlag         = flag.Bool("csv", false, "returns ip information in csv format")
 	helpFlag        = flag.Bool("help", false, "shows this help menu")
@@ -27,7 +29,7 @@ Example usage:
   ipd 8.8.8.8 		# get ip info about 8.8.8.8
   ipd -csv 8.8.8.8  	# get ip info in csv format
   ipd -json 8.8.8.8  	# get ip info in json format
-  
+
   # create CSV file of all unique vistors from nginx logs
   cat /var/log/nginx/access.log | awk '{print $1}' | sort | uniq | ipd -csv > unique_vistors.csv
 `
@@ -38,6 +40,10 @@ func main() {
 	flag.Parse()
 	if helpFlag != nil && *helpFlag {
 		fmt.Println(helpDescription)
+		return
+	}
+	if versionFlag != nil && *versionFlag {
+		fmt.Println(version)
 		return
 	}
 	apiKey := os.Getenv("IPDETECTIVE_API_KEY")
